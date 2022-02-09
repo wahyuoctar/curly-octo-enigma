@@ -1,0 +1,39 @@
+<script>
+    // Input nilai user 0-100. kalau kecil dari nol atau lebih dari seratus muncul tanda alert.
+    // 95<A+<100
+    // 90<A<94
+    // 85<B+<89
+    // 80<B<84
+    // 75<C+<79
+    // 70<C<74
+    // 65<D+<69
+    // 60<D<64
+    // 0<F<59
+
+    const fullName = prompt("Input Nama Lengkap Anda!")
+    const NIM = prompt("Input NIM Anda!")
+    const nilai = prompt("Input Nilai Anda (dalam bentuk angka)!")
+
+    if (95<=nilai && nilai<=100) {grade="A+"
+        
+    } else if(90<=nilai && nilai<=94){grade="A"
+        
+    } else if(85<=nilai && nilai<=89){grade="B+"
+
+    } else if(80<=nilai && nilai<=84){grade="B"
+
+    } else if(75<=nilai && nilai<=79){grade="C+"
+
+    } else if(70<=nilai && nilai<=74){grade="C"
+        
+    } else if(65<=nilai && nilai<=69){grade="D+"
+
+    } else if(60<=nilai && nilai<=64){grade="D"
+
+    } else if(0<=nilai && nilai<=59){grade="F"
+
+    } else{alert("Nilai yang anda masukkan salah!");}
+
+    alert(`Nama : ${fullName} \nNIM : ${NIM} \nGrade : ${grade}`)
+
+</script>

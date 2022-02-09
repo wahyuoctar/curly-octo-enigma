@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Data</title>
+</head>
+<body>
+    <style>
+        table, td, th {
+            border: 2px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+    <table>
+        <!-- Header Tabel -->
+        <thead>
+            <!-- Table Row -->
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Occupation</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <!-- Body Tabel -->
+        <tbody id="tableData">
+            
+        </tbody>
+        <!-- Footer Tabel -->
+        <tfoot>
+            <tr>
+                <td></td>
+                <td>
+                    <input id="nameInput" type="text">
+                </td>
+                <td>
+                    <select  id="occupationSelect">
+                        <option>Data Scientist</option>
+                        <option>UI/UX</option>
+                        <option>Digital Marketer</option>
+                        <option>Web Developer</option>
+                    </select>
+                </td>
+                <td>
+                    <!-- Label berfungsi saat ngeclick radio tidak harus click di bulatannya, bisa di tulisan pria juga -->
+                    <label for="man">
+                    <input checked id="man" type="radio" name="genderSelect" value="Pria">Pria
+                    </label>
+                    <label for="woman">
+                    <input id="woman" type="radio" name="genderSelect" value="Wanita">Wanita
+                    </label>
+                </td>
+                <td>
+                    <input type="number" id="ageInput">
+                </td>
+                <td>
+                    <button onclick="addData()">Add</button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <script>
+        class Person{
+            // Agar tidak menggunakan parameter yg panjang, kita bisa menggunakan hanya satu parameter dgn menjadikannya
+            // sebuah object
+            constructor(fullName, occupation, gender, age){
+                this.fullName = fullName
+                this.occupation = occupation
+                this.gender = gender
+                this.age = age
+            }
+        }
+
+        let data = [
+            new Person("Mark", "Software Developer", "Pria", 17),
+            new Person("Steve", "CEO", "Pria", 18),
+            new Person("Bill", "UI/UX", "Pria", 22),
+            new Person("Seto", "Data Scientist", "Pria", 23),
+        ]
+
+        const renderData = () => {
+            let htmlResult = ""
+
+            // forEach memiliki function dengan parameter default yang mana parameter 1 adalah isinya
+            // atau value sedangkan parameter 2 adalah indexnya
+            // dan forEach berfungsi juga sebagai looping for
+            data.forEach((val, idx) => {
+                htmlResult += `
+            <tr>
+
+                <td>${idx + 1}</td>
+                <td>${val.fullName}</td>
+                <td>${val.occupation}</td>
+                <td>${val.gender}</td>
+                <td>${val.age}</td>
+                <td><Button onclick="deleteData(${idx})">Delete</Button></td>
+            </tr>
+            `
+            })
+
+            document.getElementById("tableData").innerHTML = htmlResult
+        }
+
+        renderData()
+    
+        const addData = () => {
+            const fullNameInput = document.getElementById("nameInput").value
+            const occupationInput = document.getElementById("occupationSelect").value
+            let ageInput = document.getElementById("ageInput").value
+            ageInput = parseInt(ageInput)
+
+            const isPriaChecked = document.getElementById("man").checked
+            const isWanitaChecked = document.getElementById("woman").checked
+
+            let gender
+
+            if(isPriaChecked){
+                gender = "Pria"
+            }
+            else if(isWanitaChecked){
+                gender = "Wanita"
+            }
+            
+            // Input Validation
+            if(!fullNameInput || !occupationInput){
+                alert("Kedua field harus diisi!")
+                return
+            }
+
+            const newPerson = new Person(fullNameInput, occupationInput, gender)
+
+            data.push(newPerson)
+
+            console.log(data);
+
+            // Menampilkan data terbaru
+            renderData()
+
+            // Mengosongkan kembali text yang ada di input
+            document.getElementById("nameInput").value = ""
+            document.getElementById("occupationInput").value = ""
+        }
+    
+        function deleteData(deleteIndex){
+            data.splice(deleteIndex, 1)
+            renderData()
+        }
+    </script>
+</body>
+</html>

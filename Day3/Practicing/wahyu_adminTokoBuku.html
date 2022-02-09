@@ -1,0 +1,32 @@
+<script>
+const books = [
+    "LOTR",
+    "Harry Potter",
+    "Sherlock",
+    "Naruto",
+    "One Piece",
+    "Doraemon",
+]
+do{
+let menu = "";
+
+for (let i = 0; i < books.length; i++) {
+    menu += `${i + 1}. ${books[i]}\n`;
+  }
+  
+  let userMenuInput = prompt(menu);
+
+  //Agar Tidak Null
+  if(userMenuInput == "" || userMenuInput == null || userMenuInput == undefined){
+      break
+  }
+  books.push(userMenuInput)
+
+}while (confirm("Apakah Ingin Menambahkan ?"))
+
+
+
+
+
+
+</script>

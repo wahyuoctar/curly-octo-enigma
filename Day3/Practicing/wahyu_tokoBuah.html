@@ -1,0 +1,64 @@
+<script>
+  
+  const items = ["Leci", "Apel", "Jeruk", "Mangga"];
+  const itemPrices = [7000, 5000, 3000, 10000];
+  const itemQty = [0, 0, 0, 0, 0]
+
+
+
+  let menu = "Menu:\n";
+  for (let i = 0; i < items.length; i++) {
+    menu += `${i + 1}. ${items[i]} dengan Harga Rp. ${itemPrices[i].toLocaleString()}/kg\n`;
+  }
+  menu += `${items.length + 1}. Checkout`
+  
+
+  do{
+  let userMenuInput = prompt(menu);
+  userMenuInput = parseInt(userMenuInput);
+
+  //Ketika user pilih menu checkout
+
+    if (userMenuInput == items.length + 1){
+      break;
+    }
+
+  // Menu input yang diubah menjadi index array
+  let userMenuInputIndex = userMenuInput - 1;
+
+  let selectedProductName = items[userMenuInputIndex];
+  let selectedProductPrice = itemPrices[userMenuInputIndex];
+
+  let productQty = prompt(`Mau beli berapa ${selectedProductName} (kg)?`);
+  productQty = parseInt(productQty);
+
+  itemQty[userMenuInputIndex] = productQty
+
+
+  let totalPrice = (selectedProductPrice * productQty).toLocaleString();
+  let konfirmasi = confirm(`Apakah Anda yakin Membeli Buah ${selectedProductName} sebanyak ${productQty} kg dengan harga Rp. ${totalPrice}?`)
+  
+  if(konfirmasi){
+  alert(
+    `Kamu telah menambahkan item ${selectedProductName} sebanyak ${productQty} kg dengan harga Rp. ${totalPrice}. Terimakasih!`
+  )}
+  else { alert(`Terimakasih!`) }
+
+   } while (confirm("Apakah Anda Ingin Menambahkan Item ?"))
+
+// Tampilkan cart
+
+  let cart = "";
+  let totalPrice = 0;
+
+  for (let i = 0; i < items.length; i++) {
+    cart += `${items[i]} x ${itemQty[i]} -> Rp. ${
+      itemQty[i] * itemPrices[i]
+    }\n`;
+    totalPrice += itemQty[i] * itemPrices[i];
+  }
+
+  cart += `Total Price: Rp. ${totalPrice}`;
+
+  alert(cart);
+</script>

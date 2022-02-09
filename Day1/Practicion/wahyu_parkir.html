@@ -1,0 +1,33 @@
+<script>
+// Biaya Parkir Kendaraan, Menu 1 Untuk Mobil, Menu 2 Untuk Motor
+    let kendaraan = prompt("Pilih Jenis Kendaraan: \n1. Mobil \n2. Motor")
+    kendaraan = parseInt(kendaraan)
+
+    if(kendaraan == 1) {
+        let durasi = prompt("Durasi Parkir (jam): ")
+        durasi = parseInt(durasi)
+        if(0<= durasi && durasi <= 2) {biaya = 5000}
+        else if(durasi > 2){biaya = 5000 + ((durasi-2)*2000)}
+        else if(durasi < 0) {alert("Durasi yang Anda Masukkan Salah!")}
+
+        if(biaya>50000) {biaya=50000}
+        alert(`Jumlah Biayar Parkir: ${biaya}`)
+    }
+    else if(kendaraan == 2) {
+        let durasi = prompt("Durasi Parkir (jam): ")
+        durasi = parseInt(durasi)
+        if(0<= durasi && durasi <= 2) {biaya = 3000}
+        else if(durasi > 2){biaya = 3000 + ((durasi-2)*1000)}
+        else if(durasi < 0) {alert("Durasi yang Anda Masukkan Salah!")}
+
+        if(biaya>30000) {biaya=30000}
+        alert(`Jumlah Biaya Parkir: ${biaya}`)    }
+    else{
+        alert("Menu yang anda masukkan salah!")
+    }
+
+
+    
+
+
+</script>

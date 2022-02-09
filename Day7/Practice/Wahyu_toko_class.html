@@ -1,0 +1,215 @@
+<script>
+
+let totalIncome = 0
+//=======CLASS=======
+class Kemeja {
+    constructor(brand, price){
+    this.brand = brand
+    this.price = price
+    this.quantity = 0
+    }
+
+    toShowList(){
+        return `${this.brand}: Rp. ${this.price.toLocaleString()},-`
+    }
+    toCalculateTotal(){
+        return this.quantity * this.price
+    }
+    toShowCart(){
+        return `${this.brand}: Rp. ${this.price.toLocaleString()},- x ${this.quantity} pcs = Rp. ${(this.quantity * this.price).toLocaleString()}`
+    }
+
+}
+
+//=======ARRAY=======
+const kemejaDetail = [
+    new Kemeja("Uniqlo", 200000),
+    new Kemeja("Pull n Bear", 250000),
+    new Kemeja("Wrangler", 180000)
+]
+
+const transactionDetail = [
+
+]
+
+//=======FUNCTION=======
+//Untuk Menampilkan list produk
+const showLists = (isPrompt = false, message = "List Produk!") =>{
+    let productLists = message + "\n"
+    for(let i = 0; i < kemejaDetail.length; i++){
+        productLists += `${i+1}. ${kemejaDetail[i].toShowList()}\n`
+    }
+    if(isPrompt){
+        let userInput = prompt(productLists)
+        userInput = parseInt(userInput)
+
+        userInputIndex = userInput - 1
+
+        return userInputIndex
+    }
+    alert(productLists)
+}
+//Untuk Penambahan data produk
+const createData = () => {
+    let addBrand = prompt(`Masukkan Nama Brand: `)
+    let addPrice = prompt(`Masukkan Harga Brand: `)
+    //Agar Price diubah menjadi sebuah number
+    addPrice = parseInt(addPrice)
+    //Untuk menambahkan data baru
+    kemejaDetail.push(new Kemeja(addBrand, addPrice))
+    alert(`Data Anda Berhasil ditambahkan!`)
+}
+//Untuk Mengubah Data
+const editData = () => {
+    let adminInputEdit = showLists(true, "Pilih Nomor Produk yang Ingin Anda Ubah!")
+    //Input Nama Baru
+    let adminEditBrand = prompt(`Silahkan Input Brand Baru dari ${kemejaDetail[adminInputEdit].brand}!`)
+    //Input Harga Baru
+    let adminEditPrice = prompt(`Masukkan Harga Terbaru!`)
+    adminEditPrice = parseInt(adminEditPrice)
+
+    kemejaDetail[adminInputEdit].brand = adminEditBrand
+    kemejaDetail[adminInputEdit].price = adminEditPrice
+}
+//Untuk Add to Cart
+const addTocart = () => {
+    let userInputAddtoCart = showLists(true, "Silahkan Pilih Produk!")
+    let userInputQty = prompt(`Berapa banyak Kemeja ${kemejaDetail[userInputAddtoCart].brand} yang Ingin Anda Beli ?`)
+    userInputQty = parseInt(userInputQty)
+
+    kemejaDetail[userInputAddtoCart].quantity += userInputQty
+}
+//Untuk Show Cart
+const showCart = (isCheckout = false, message = "Keranjang Anda!\n") =>{
+    let userCart = message + ""
+    let totalPrice = 0
+
+    for(let i = 0; i < kemejaDetail.length; i++){
+        userCart += `${i + 1}. ${kemejaDetail[i].toShowCart()},-\n`
+        totalPrice += kemejaDetail[i].toCalculateTotal()
+    }
+    userCart += `\nTotal: Rp. ${totalPrice.toLocaleString()},-`
+    if(isCheckout){
+        let userPayment = prompt(`${userCart}\nMasukkan Uang yang Anda Bayarkan!`)
+        userPayment = parseInt(userPayment)
+        if(userPayment > totalPrice){
+            alert(`Kembalian Anda Rp. ${(userPayment - totalPrice).toLocaleString()},-`)
+            totalIncome += totalPrice
+            for(let i = 0; i < kemejaDetail.length; i++){
+            if(kemejaDetail[i].quantity > 0){
+                transactionDetail.push({...kemejaDetail[i]})
+            }
+            }
+            for(let i = 0; i < kemejaDetail.length; i++){
+            kemejaDetail[i].quantity = 0
+            }
+        }
+        else if(userPayment === totalPrice){
+            alert("Terimakasih!")
+            totalIncome += totalPrice
+            for(let i = 0; i < kemejaDetail.length; i++){
+            if(kemejaDetail[i].quantity > 0){
+                transactionDetail.push({...kemejaDetail[i]})
+            }
+            }
+            for(let i = 0; i < kemejaDetail.length; i++){
+            kemejaDetail[i].quantity = 0
+            }
+        }
+        else if(userPayment < totalPrice){
+            alert(`Uang Anda Kurang ${(totalPrice - userPayment).toLocaleString()},-`)
+        }
+        
+        return
+    }
+    alert(userCart)
+}
+//=======SHOW REPORT=======
+const showReport = () => {
+    if(transactionDetail.length){
+        let reportData = ""
+
+        for(let i = 0; i < transactionDetail.length; i++){
+            reportData += `${i+1}. ${transactionDetail[i].brand} x ${transactionDetail[i].quantity} pcs = Rp. ${(transactionDetail[i].quantity * transactionDetail[i].price).toLocaleString()},-\n`
+        }
+        alert(`${reportData}\n Total Pendapatan: Rp. ${totalIncome.toLocaleString()},-`)
+    }
+    else {
+        alert("Belum Ada Transaksi!")
+    }
+}
+
+do{
+    let menuInput = prompt(
+`=====Main Menu=====
+Login Sebagai:
+1. Admin
+2. User
+3. Exit
+=================`
+)
+//=======ADMIN=======
+if(menuInput == "1"){// Menu Admin
+    do{
+        let adminMenuInput = prompt(`Selamat datang di menu Admin!
+Silahkan Pilih Menu:
+1. Add
+2. Show
+3. Delete
+4. Edit
+5. Report
+6. Back`)
+        if(adminMenuInput == "1"){// Menu Create
+            createData()
+        }
+        else if(adminMenuInput == "2"){// Menu Show
+            showLists(false, undefined)
+        }
+        else if(adminMenuInput == "3"){//Menu Delete
+            let adminInputDelete = showLists(true, "Pilih Nomor Produk yang ingin Anda Hapus!")
+            kemejaDetail.splice(adminInputDelete, 1)
+        }
+        else if(adminMenuInput == "4"){//Menu Edit
+            editData()
+            alert(`Data Telah Berubah!`)
+        }
+        else if(adminMenuInput == "5"){//Menu Report
+            showReport()
+        }
+        else if(adminMenuInput == "6"){//Menu Kembali
+            break
+        }
+
+}while(true)
+}
+//=======USER=======
+else if(menuInput == "2") {// Menu User
+    do{
+        let userMenuInput = prompt(`Selamat datang di menu User!
+Silahkan Pilih Menu:
+1. Add to Cart
+2. Show Cart
+3. Checkout
+4. Back`)
+        if(userMenuInput == "1"){// Menu Add to Cart
+            addTocart()
+            alert(`Barang Berhasil ditambahkan ke Keranjang Anda!`)
+        }
+        else if(userMenuInput == "2"){// Menu Show Cart
+            showCart(false)
+        }
+        else if(userMenuInput == "3"){//Menu Checkout
+            showCart(true)
+        }
+        else if(userMenuInput == "4"){//Menu Kembali
+            break
+        }
+}while(true)
+}
+//=======EXIT=======
+else if(menuInput == "3"){// Exit
+        alert(`Terimakasih!`)
+        break
+}
+}while(confirm(`Apakah Anda Ingin Kembali ?`))
+</script>

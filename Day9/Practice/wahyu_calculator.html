@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+  </head>
+  <body>
+    <h1>Matematika itu Menyenangkan!</h1>
+    
+    <label for="angkaPertama">
+    Angka Pertama : <input type="number" id="angkaPertama">
+  </label>
+  <label for="angkaKedua">
+    Angka Kedua : <input type="number" id="angkaKedua">
+  </label>
+    <br>
+    <br>
+    Operator : 
+    <button id="tambah" onclick="tambah()">+</button>
+    <button id="kurang" onclick="kurang()">-</button>
+    <button id="kali" onclick="kali()">x</button>
+    <button id="bagi" onclick="bagi()">/</button>
+    <button id="mod" onclick="mod()">Mod</button>
+    <button id="^" onclick="pangkat()">^</button>
+    <h2>Jawaban Anda: <span id="hasil"></span></h2>
+    
+    
+    <script>
+      let firstNumber
+      let secondNumber
+
+      function Int(){
+      firstNumber = document.getElementById("angkaPertama").value;
+      secondNumber = document.getElementById("angkaKedua").value;
+      firstNumber = parseInt(firstNumber)
+      secondNumber = parseInt(secondNumber)
+      }
+
+      function tambah() {
+        Int()
+        let math = firstNumber + secondNumber
+        document.getElementById("hasil").innerHTML = math
+      }
+      function kurang(){
+        Int()
+        let math = firstNumber - secondNumber
+        document.getElementById("hasil").innerHTML = math
+
+      }
+      function bagi(){
+        Int()
+        let math = firstNumber / secondNumber
+        document.getElementById("hasil").innerHTML = math
+      }
+      function kali(){
+        Int()
+        let math = firstNumber * secondNumber
+        document.getElementById("hasil").innerHTML = math
+      }
+      function mod(){
+        Int()
+        let math = firstNumber % secondNumber
+        document.getElementById("hasil").innerHTML = math
+      }
+      function pangkat(){
+        Int()
+        let math = firstNumber ** secondNumber
+        document.getElementById("hasil").innerHTML = math
+      }
+    </script>
+  </body>
+</html>

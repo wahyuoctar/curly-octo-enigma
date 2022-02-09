@@ -1,0 +1,97 @@
+<script>
+  // Create
+  // Read
+  // Update
+  // Delete
+
+  // 1. Tampilkan menu
+  //  1. Tambah data
+  //  2. Delete data
+  //  3. Show data
+
+  // Untuk menyimpan data produk (buku) kita
+  let products = ["LOTR", "Harry Potter", "Sherlock", "Naruto"];
+
+  do {
+    const userMenuInput = prompt(`Menu:
+    1. Tambah Data
+    2. Delete Data
+    3. Show Data
+    4. Modify Data
+    5. Exit`);
+
+    // Jika user pilih tambah data
+    if (userMenuInput == "1") {
+      let userInputNewProduct = prompt("Anda mau menambahkan buku apa?");
+
+      products.push(userInputNewProduct);
+      alert("Data tertambahkan!");
+    } else if (userMenuInput == "2") {
+      // Jika user pilih delete data
+
+      let productsList = "";
+
+      for (let i = 0; i < products.length; i++) {
+        productsList += i + 1 + ". " + products[i] + "\n";
+      }
+
+      let userDeleteItemInput = prompt(productsList);
+      userDeleteItemInput = parseInt(userDeleteItemInput);
+
+      let userDeleteItemIndex = userDeleteItemInput - 1;
+
+      products.splice(userDeleteItemIndex, 1);
+    } else if (userMenuInput == "3") {
+      // Jika user pilih show data
+      let productsList = "";
+
+      // productsList += "1. " + products[0] + "\n";
+      // productsList += "2. " + products[1] + "\n";
+      // productsList += "3. " + products[2] + "\n";
+      // productsList += "4. " + products[3] + "\n";
+
+      for (let i = 0; i < products.length; i++) {
+        productsList += i + 1 + ". " + products[i] + "\n";
+      }
+
+      alert(productsList);
+    } 
+      else if(userMenuInput == "4") {
+        //Modify Data
+        let productsList = "";
+        let modifyData
+        let modifyDataNumber
+        let modifyDataIndex
+
+        for (let i = 0; i < products.length; i++) {
+        productsList += i + 1 + ". " + products[i] + "\n";
+        }
+        modifyDataNumber = prompt(`${productsList}\nPilih Nomor Buku yang Ingin diubah!`)
+        modifyDataNumber = parseInt(modifyDataNumber)
+
+        modifyDataIndex = modifyDataNumber -1
+
+        modifyData = prompt(`Masukkan Nama Data:`)
+        products[modifyDataIndex] = modifyData
+
+      }
+    
+      else if (userMenuInput == "5") {
+      // Jika user pilih exit
+      alert("Goodbye!");
+      break;
+    }
+  } while (true);
+
+  // Jika user pilih menu 1 (tambah data)
+  // Kasih prompt untuk nama barang / data
+  // Kalau user ok / sudah input barang -> kembali ke menu awal
+
+  // Jika user pilih menu 2 (delete data)
+  // Kasih prompt dengan list data yang sudah ada
+  // User pilih barang menggunakan nomor list data yang ada di prompt
+  // Jika user pilih sebuah data, hapus data tersebut dari array (gunakan method splice)
+
+  // Jika user pilih menu 3 (show data)
+  // Kasih alert dengan list data yang ada
+</script>

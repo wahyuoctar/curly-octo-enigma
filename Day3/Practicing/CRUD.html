@@ -1,0 +1,76 @@
+<script>
+  // Create
+  // Read
+  // Update
+  // Delete
+
+  // 1. Tampilkan menu
+  //  1. Tambah data
+  //  2. Delete data
+  //  3. Show data
+
+  // Jika user pilih menu 1 (tambah data)
+  // Kasih prompt untuk nama barang / data
+  // Kalau user ok / sudah input barang -> kembali ke menu awal
+
+  // Jika user pilih menu 2 (delete data)
+  // Kasih prompt dengan list data yang sudah ada
+  // User pilih barang menggunakan nomor list data yang ada di prompt
+  // Jika user pilih sebuah data, hapus data tersebut dari array (gunakan method splice)
+
+  // Jika user pilih menu 3 (show data)
+  // Kasih alert dengan list data yang ada
+
+  const books = [
+    "LOTR",
+    "Harry Potter",
+    "Sherlock",
+    "Naruto",
+    "One Piece",
+    "Doraemon",
+]
+  let userMenuInput
+  let userMenuInputIndex = userMenuInput - 1
+  let tambahBuku
+  let hapusBuku
+  let listBaru
+  
+  let pilihMenu = `Pilih Menu:
+  1. Tambah Data
+  2. Delete Data
+  3. Show Data`
+ //Setelah melakukan kegiatan 3 menu tersebut angka kembali ke menu awal 
+  do{ 
+  //Disaat user menginput tidak diantara 3 angka tersebut angka terjadi looping
+    do{userMenuInput = prompt(`${[pilihMenu]}`)
+      } 
+      while (!(userMenuInput == "1" || userMenuInput == "2" || userMenuInput == "3"))
+
+    //Disaat ingin Show Data, list buku akan menampilkan buku yang terakhir kali sudah disimpan
+    let booksList = ""
+  //Menu Tambah Data
+  if(userMenuInput == "1"){
+    tambahBuku = prompt(`Masukkan Nama Buku:`)
+    books.push(tambahBuku)
+  } 
+  //Menu Delete Data
+  else if(userMenuInput == "2"){
+    for(let i = 0; i < books.length; i++){
+      booksList += `${i+1}. ${books[i]}\n`
+    }
+    hapusBuku = prompt(`List Buku\n${booksList}\nPilih Nomor Buku yang ingin Anda Hapus!`)
+    hapusBuku = parseInt(hapusBuku)
+    books.splice(hapusBuku - 1, 1)
+  } 
+  //Menu Show Data
+  else if(userMenuInput == "3"){
+    for(let i = 0; i < books.length; i++){
+      booksList += `${i+1}. ${books[i]}\n`
+    }
+    alert(booksList)
+  }
+ } while (confirm(`Kembali Menu Awal ?`))
+  alert(`Terimakasih!`)
+  
+
+</script>

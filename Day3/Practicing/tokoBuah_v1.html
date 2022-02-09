@@ -1,0 +1,28 @@
+<script>
+  const items = ["Leci", "Apel", "Jeruk", "Mangga"];
+  const itemPrices = [7000, 5000, 3000, 10000];
+
+  let menu = "Menu:\n";
+
+  for (let i = 0; i < items.length; i++) {
+    menu += `${i + 1}. ${items[i]} || Rp.${itemPrices[i].toLocaleString()}\n`;
+  }
+
+  let userMenuInput = prompt(menu);
+  userMenuInput = parseInt(userMenuInput);
+
+  // Menu input yang diubah menjadi index array
+  let userMenuInputIndex = userMenuInput - 1;
+
+  let selectedProductName = items[userMenuInputIndex];
+  let selectedProductPrice = itemPrices[userMenuInputIndex];
+
+  let productQty = prompt(`Mau beli berapa ${selectedProductName}?`);
+  productQty = parseInt(productQty);
+
+  let totalPrice = selectedProductPrice * productQty;
+
+  alert(
+    `Kamu telah beli ${selectedProductName} sebanyak ${productQty} buah dengan harga Rp.${totalPrice}`
+  );
+</script>

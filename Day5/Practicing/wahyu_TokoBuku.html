@@ -1,0 +1,225 @@
+<script>
+    
+    let books = ["LOTR", "Harry Potter", "Sherlock", "Naruto"]
+    let bookPrices = [100000, 150000, 135000, 140000]
+    let bookQty = [0, 0, 0, 0]
+    let bookQtyAdmin = [0, 0, 0, 0]
+    let adminIncome = 0
+    let adminQty = 0
+
+
+    //====== FUNCTION ======
+    //Function Show Menu
+    const showMenu = (isPrompt = false) => {
+    let productsList = "";
+
+    for (let i = 0; i < books.length; i++) {
+      productsList += `${i + 1}. ${books[i]} = Rp. ${bookPrices[i].toLocaleString()} \n`;
+    }
+
+    if (isPrompt) {
+      let userInput = prompt(productsList);
+      userInput = parseInt(userInput);
+
+      let userInputIndex = userInput - 1;
+      return userInputIndex;
+        }
+
+    alert(productsList);
+    };
+
+    //Function Cart
+
+    const showCart = (isPrompt = false) => {
+    let cart = "";
+    let totalPrice = 0;
+
+    for (let i = 0; i < books.length; i++) {
+    cart += `${i+1}. ${books[i]} | Rp. ${bookPrices[i].toLocaleString()} x ${bookQty[i]} = Rp. ${(bookQty[i] * bookPrices[i]).toLocaleString()}\n`;
+    totalPrice += bookQty[i] * bookPrices[i];}
+
+    cart += `Total Price: Rp. ${totalPrice.toLocaleString()}`;
+
+    if(isPrompt){
+        let userInput = prompt(cart);
+        userInput = parseInt(userInput);
+
+        let userInputIndex = userInput - 1;
+        return userInputIndex; }
+
+    alert(cart);
+    return totalPrice
+    }
+    //======================
+
+do{
+    let menuInput = prompt(
+`=====Main Menu=====
+Login Sebagai:
+1. Admin
+2. User
+3. Exit
+=================`
+)
+
+//====== ADMIN ======
+    if(menuInput == "1"){// Menu Admin
+        do{
+        let adminMenuInput = prompt(`Selamat datang di menu Admin!
+Silahkan Pilih Menu:
+1. Add
+2. Show
+3. Delete
+4. Edit
+5. Report
+6. Back`)
+
+            if(adminMenuInput == "1"){// Menu Create
+                let userInputNewBooks = prompt("Anda mau menambahkan buku apa?");
+
+                books.push(userInputNewBooks);
+
+                let userInputNewPrice = prompt(`Berapa harga buku ${userInputNewBooks} yang ingin anda berikan?`)
+                userInputNewPrice = parseInt(userInputNewPrice)
+
+                bookPrices.push(userInputNewPrice)
+                bookQty.push(0)
+                bookQtyAdmin.push(0)
+                alert("Data tertambahkan!");
+
+            }
+
+            else if(adminMenuInput == "2"){// Menu Show
+                showMenu(false)
+
+            }
+
+            else if(adminMenuInput == "3"){//Menu Delete
+                
+                let userDeleteItemInput = showMenu(true)
+                userDeleteItemInput = parseInt(userDeleteItemInput);
+
+                books.splice(userDeleteItemInput, 1);
+                bookPrices.splice(userDeleteItemInput, 1)
+                bookQty.splice(userDeleteItemInput, 1)
+                bookQtyAdmin.splice(userDeleteItemInput, 1)
+                
+            }
+
+            else if(adminMenuInput == "4"){//Menu Edit
+
+                let modifyBooksNumber = showMenu(true)
+                modifyBooksNumber = parseInt(modifyBooksNumber)
+
+                modifyBooks = prompt(`Masukkan Nama Buku:`)
+                books[modifyBooksNumber] = modifyBooks
+                //Input Harga Terbaru
+                modifyBooksPrice = prompt(`Masukkan Harga Buku:`)
+                modifyBooksPrice = parseInt(modifyBooksPrice)
+
+                bookPrices[modifyBooksNumber] = modifyBooksPrice
+
+            }
+
+            else if(adminMenuInput == "5"){//Menu Report
+                for(let i = 0; i < books.length; i++){
+                    adminQty += bookQtyAdmin[i] 
+                }
+                alert(`Under Maintenance! Masih terjadi kesalahan pada Total Buku Terjual`)
+                alert(`Total Buku Terjual: ${adminQty}\nTotal Pendapatan: Rp. ${adminIncome.toLocaleString()},-`)
+        
+            }
+
+            else if(adminMenuInput == "6"){//Menu Kembali
+                break
+            }
+        } while(true)
+    }
+
+
+//====== USER ======
+    else if(menuInput == "2") {// Menu User
+        do{
+        let userMenuInput = prompt(`Selamat datang di menu User!
+Silahkan Pilih Menu:
+1. Add to Cart
+2. Show Cart
+3. Checkout
+4. Back`)
+        
+            if(userMenuInput == "1"){//Add to Cart
+                do {
+                let addToCartInput = showCart(true);
+                addToCartInput = parseInt(addToCartInput);
+
+                if (addToCartInput == books.length + 1) {
+                break;
+                }
+
+                let selectedBooksName = books[addToCartInput];
+                let selectedBooksPrice = bookPrices[addToCartInput];
+
+                let addBookQty = prompt(`Mau beli berapa ${selectedBooksName}?`);
+                addBookQty = parseInt(addBookQty);
+
+                bookQty[addToCartInput] += addBookQty;
+                bookQtyAdmin[addToCartInput] += addBookQty
+                break
+            } while (true);
+                
+            }
+
+            else if(userMenuInput == "2"){//Menu Show Cart
+                showCart(false)
+
+            }
+
+            else if(userMenuInput == "3"){//Menu Checkout
+                let totalPrice = showCart(false)
+                let yourWallet = prompt(`Total Belanjaan Anda: Rp. ${totalPrice.toLocaleString()},-\nInput Jumlah Uang yang akan Anda Berikan:`)
+                
+                //Saat pembeli menginput uang 
+                if(yourWallet > totalPrice){
+                    let changeMoney = yourWallet - totalPrice
+                    changeMoney = parseInt(changeMoney)
+                    alert(`Kembalian anda Rp. ${changeMoney.toLocaleString()},-`)
+                    
+                    for(let i = 0; i < books.length; i++){
+                        bookQtyAdmin[i]=bookQty[i]
+                    }
+                    adminIncome += totalPrice
+                    for(let i = 0; i < books.length; i++){
+                        bookQty[i]=0
+                    }
+                }
+                else if(yourWallet < totalPrice){
+                    alert(`Uang anda kurang!`)
+                }
+                else if(yourWallet == totalPrice) {
+                    alert(`Terimakasih!`)
+
+                    for(let i = 0; i < books.length; i++){
+                        bookQtyAdmin[i]=bookQty[i]
+                    }
+                    adminIncome += totalPrice
+                    for(let i = 0; i < books.length; i++){
+                        bookQty[i]=0
+                    }}
+                
+            }
+
+            else if(userMenuInput == "4"){//Menu Kembali
+                break
+            }
+
+        } while(true)
+
+
+    }
+//====== EXIT ======
+    else if(menuInput == "3"){// Exit
+        alert(`Terimakasih!`)
+        break
+    }
+} while(confirm(`Apakah Anda Ingin Kembali ?`))
+</script>
